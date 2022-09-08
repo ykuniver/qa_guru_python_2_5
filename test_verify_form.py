@@ -78,7 +78,9 @@ def test_verify_form():
     browser.element('[class=table-responsive]').should((have.text(name)))
     browser.element('[class=table-responsive]').should((have.text(last_name)))
     browser.element('[class=table-responsive]').should((have.text(email)))
-    browser.element('[class=table-responsive').should((have.text(user_number)))
+
+    # browser.element('[class=table-responsive').should((have.text(user_number)))
+    browser.element(by.xpath("//td[contains(text(),'Mobile')]//following-sibling::td[1]")).should((have.text(user_number)))
 
     date_of_birth = birth_day + " " + birth_month + "," + birth_year
     browser.element('[class=table-responsive').should((have.text(date_of_birth)))
