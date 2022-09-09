@@ -1,4 +1,5 @@
 import json
+import os
 
 from selene.support.shared import browser
 from selene import have, command, be, by
@@ -29,7 +30,10 @@ def test_verify_form():
     subjects = data['subjects']
     current_address = data['current_address']
     hobby = data['hobby']
-    path_to_file = data['path_to_file']
+
+    current_dir = os.getcwd()
+    file_name = data['file_name']
+    path_to_file = current_dir + "\\" + file_name
     state_and_city = data['state_and_city']
 
     # Handling the URL and the ads
@@ -90,7 +94,7 @@ def test_verify_form():
     browser.element('[class=table-responsive').should((have.text(hobby)))
     browser.element('[class=table-responsive').should((have.text(state_and_city)))
 
-    file_name = path_to_file.split('\\')[-1]
+    # file_name = filename.split('\\')[-1]
     browser.element('[class=table-responsive').should((have.text(file_name)))
 
 #   Obsolete
