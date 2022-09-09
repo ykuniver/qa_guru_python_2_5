@@ -31,9 +31,9 @@ def test_verify_form():
     current_address = data['current_address']
     hobby = data['hobby']
 
-    current_dir = os.getcwd()
+    current_dir = os.path.join(os.getcwd(), '')
     file_name = data['file_name']
-    path_to_file = current_dir + "\\" + file_name
+    path_to_file = current_dir + file_name
     state_and_city = data['state_and_city']
 
     # Handling the URL and the ads
