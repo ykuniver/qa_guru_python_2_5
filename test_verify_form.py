@@ -31,9 +31,10 @@ def test_verify_form():
     current_address = data['current_address']
     hobby = data['hobby']
 
-    current_dir = os.path.join(os.getcwd(), '')
+    current_dir = os.path.join(os.getcwd(), "resources", '')
     file_name = data['file_name']
     path_to_file = current_dir + file_name
+    print(path_to_file)
     state_and_city = data['state_and_city']
 
     # Handling the URL and the ads
@@ -42,30 +43,42 @@ def test_verify_form():
 
     # Filling the form
 
+    # firstName, lastName, userEmail, gender, userNumber
+
     browser.element('[id="firstName"]').type(name)
     browser.element('[id="lastName"]').type(last_name)
     browser.element('[id="userEmail"]').type(email)
     browser.element('[id="gender-radio-1"]').double_click()
+    browser.element('[id="userNumber"]').type(user_number)
+
+    # birthday
 
     browser.element('#dateOfBirthInput').click()
-
     browser.element(by.css('.react-datepicker__month-select')).send_keys(birth_month).click().press_enter()
-
     browser.element(by.css('.react-datepicker__year-select')).send_keys(birth_year).click().press_enter()
     browser.element('#subjectsInput').perform(command.js.scroll_into_view)
-
     day_locator = ".react-datepicker__day--0" + birth_day
     browser.element(by.css(day_locator)).double_click()
+
+    # subjects
 
     browser.element('#subjectsInput').perform(command.js.scroll_into_view)
     browser.element('#subjectsInput').type(subjects).press_enter()
 
+    # current address
+
     browser.element('[id=currentAddress]').type(current_address)
+
+    # hobby
 
     hobby_xpath = "//label[contains(.,'" + hobby + "')]"
     browser.element(by.xpath(hobby_xpath)).click()
 
+    # picture
+
     browser.element('[id="uploadPicture"]').send_keys(path_to_file)
+
+    # state and city
 
     browser.element('#state').perform(command.js.scroll_into_view)
     browser.element('#state').click()
@@ -74,7 +87,9 @@ def test_verify_form():
     browser.element(by.xpath("//div[@id='city']/div/div")).click()
     browser.element('#react-select-4-option-0').click()
 
-    browser.element('[id="userNumber"]').type(user_number).press_enter()
+    # submitting the form
+
+    browser.element('#submit').perform(command.js.click)
 
     # Verification
 
@@ -83,7 +98,6 @@ def test_verify_form():
     browser.element('[class=table-responsive]').should((have.text(last_name)))
     browser.element('[class=table-responsive]').should((have.text(email)))
 
-    # browser.element('[class=table-responsive').should((have.text(user_number)))
     browser.element(by.xpath("//td[contains(text(),'Mobile')]//following-sibling::td[1]")).should((have.text(user_number)))
 
     date_of_birth = birth_day + " " + birth_month + "," + birth_year
@@ -94,12 +108,9 @@ def test_verify_form():
     browser.element('[class=table-responsive').should((have.text(hobby)))
     browser.element('[class=table-responsive').should((have.text(state_and_city)))
 
-    # file_name = filename.split('\\')[-1]
     browser.element('[class=table-responsive').should((have.text(file_name)))
 
 #   Obsolete
-#   browser.element('#state').perform(command.js.scroll_into_view)
-#   browser.element('#state').click()
 #   browser.element('#react-select-4-option-4').double_click()
 #   browser.element('[#subjectsContainer > div]').type(subjects)
 #   browser.element('[id="hobbies-checkbox-1"]').double_click()
