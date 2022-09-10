@@ -2,8 +2,8 @@ import json
 import os
 
 from selene.support.shared import browser
-from selene import have, command, be, by
-from selene.support.shared.jquery_style import s, ss
+from selene import have, command, by
+from selene.support.shared.jquery_style import ss
 
 
 def given_opened_form():
@@ -33,12 +33,10 @@ def test_verify_form():
     subjects = data['subjects']
     current_address = data['current_address']
     hobby = data['hobby']
-
-    picture_dir = os.path.join(os.getcwd(), "resources", '')
-    picture_file = data['picture_file']
-    picture_path = picture_dir + picture_file
-
     state_and_city = data['state_and_city']
+
+    picture = data['picture_file']
+    picture_file = os.path.join(os.getcwd(), "resources", picture)
 
     # Handling the URL and the ads
 
@@ -79,7 +77,7 @@ def test_verify_form():
 
     # picture
 
-    browser.element('[id="uploadPicture"]').send_keys(picture_path)
+    browser.element('[id="uploadPicture"]').send_keys(picture_file)
 
     # state and city
 
@@ -101,7 +99,8 @@ def test_verify_form():
     browser.element('[class=table-responsive]').should((have.text(last_name)))
     browser.element('[class=table-responsive]').should((have.text(email)))
 
-    browser.element(by.xpath("//td[contains(text(),'Mobile')]//following-sibling::td[1]")).should((have.text(user_number)))
+    browser.element(by.xpath("//td[contains(text(),'Mobile')]//following-sibling::td[1]")).\
+        should((have.text(user_number)))
 
     date_of_birth = birth_day + " " + birth_month + "," + birth_year
     browser.element('[class=table-responsive').should((have.text(date_of_birth)))
@@ -111,7 +110,7 @@ def test_verify_form():
     browser.element('[class=table-responsive').should((have.text(hobby)))
     browser.element('[class=table-responsive').should((have.text(state_and_city)))
 
-    browser.element('[class=table-responsive').should((have.text(picture_file )))
+    browser.element('[class=table-responsive').should((have.text(picture)))
 
 #   Obsolete
 #   browser.element('#react-select-4-option-4').double_click()
