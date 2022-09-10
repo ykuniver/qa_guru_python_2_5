@@ -1,5 +1,6 @@
 import json
 import os
+from pathlib import Path
 
 from selene.support.shared import browser
 from selene import have, command, by
@@ -36,7 +37,7 @@ def test_verify_form():
     state_and_city = data['state_and_city']
 
     picture = data['picture_file']
-    picture_file = os.path.join(os.getcwd(), "resources", picture)
+    picture_file = os.path.join(Path(script_dir).parent.absolute(), "resources", picture)
 
     # Handling the URL and the ads
 
