@@ -110,3 +110,4 @@ def test_verify_form():
         locator = "//td[contains(text(),'" + label + "')]//following-sibling::td[1]"
         browser.element(by.xpath(locator)).should(have.text(value))
 
+    browser.element('[id=example-modal-sizes-title-lg]').should((have.text("Thanks for submitting the form")))
