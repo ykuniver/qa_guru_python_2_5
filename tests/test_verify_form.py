@@ -19,7 +19,10 @@ def test_verify_form():
 
     # Reading input values
 
-    with open('param.json') as json_file:
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    params_file = os.path.join(script_dir, 'param.json')
+
+    with open(params_file) as json_file:
         data = json.load(json_file)
 
     name = data['name']
@@ -31,10 +34,10 @@ def test_verify_form():
     current_address = data['current_address']
     hobby = data['hobby']
 
-    current_dir = os.path.join(os.getcwd(), "resources", '')
-    file_name = data['file_name']
-    path_to_file = current_dir + file_name
-    print(path_to_file)
+    picture_dir = os.path.join(os.getcwd(), "resources", '')
+    picture_file = data['picture_file']
+    picture_path = picture_dir + picture_file
+
     state_and_city = data['state_and_city']
 
     # Handling the URL and the ads
@@ -76,7 +79,7 @@ def test_verify_form():
 
     # picture
 
-    browser.element('[id="uploadPicture"]').send_keys(path_to_file)
+    browser.element('[id="uploadPicture"]').send_keys(picture_path)
 
     # state and city
 
@@ -108,7 +111,7 @@ def test_verify_form():
     browser.element('[class=table-responsive').should((have.text(hobby)))
     browser.element('[class=table-responsive').should((have.text(state_and_city)))
 
-    browser.element('[class=table-responsive').should((have.text(file_name)))
+    browser.element('[class=table-responsive').should((have.text(picture_file )))
 
 #   Obsolete
 #   browser.element('#react-select-4-option-4').double_click()
